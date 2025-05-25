@@ -1,26 +1,28 @@
 
 // Функції для роботи з бекендом
+
+const BASE_URL = 'https://dummyjson.com';
 export async function getProductById(id){
-    const url = `${BASE_URL}/${id}`;
+    const url = `${BASE_URL}/products/${id}`;
 
     try{
         const response = await fetch(url);
         if(!response.ok){
             throw new Error(`Продукт з ID=${id} не знайдено`);  
         }
-        return await response.json();
+        return response.json();
     }catch (error){
-        iziToast.error({
-            message: `Продукт з ID=${id} не знайдено`,
-            position: 'topRight',
-            timeout: 2000,
-            backgroundColor: '#ffa000',
-          });
+        // iziToast.error({
+        //     message: `Продукт з ID=${id} не знайдено`,
+        //     position: 'topRight',
+        //     timeout: 2000,
+        //     backgroundColor: '#ffa000',
+        //   });
           throw error;
     }
 }
 
-const BASE_URL = 'https://dummyjson.com';
+
 
 export async function fetchCategories() {
   const res = await fetch(`${BASE_URL}/products/categories`);

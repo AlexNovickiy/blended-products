@@ -19,5 +19,6 @@ export const refs = {
   productsList: document.querySelector('.products'),
     modal: document.querySelector('.modal'),
     closeModalBtn: document.querySelector('.modal__close-btn'),
+    modalProduct: document.querySelector('.modal-product'),
 };
 
