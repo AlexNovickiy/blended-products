@@ -1,3 +1,4 @@
+
 export const refs = {
   // Список категорій
   categoriesList: document.querySelector('.categories'),
@@ -15,4 +16,8 @@ export const refs = {
   searchForm: document.querySelector('.search-form'),
   // Кнопка очищення пошуку (якщо є)
   searchClearBtn: document.querySelector('.search-form__btn-clear'),
+  productsList: document.querySelector('.products'),
+    modal: document.querySelector('.modal'),
+    closeModalBtn: document.querySelector('.modal__close-btn'),
 };
+
