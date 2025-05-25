@@ -12,5 +12,5 @@
             <p class="products__brand"><span class="products__brand--bold">Brand:</span> ${e.brand}</p>
             <p class="products__category">Category: ${e.category}</p>
             <p class="products__price">Price: $${e.price}</p>
-          </li>`).join(""))}function d(s){s?o.notFound.classList.add("not-found--visible"):o.notFound.classList.remove("not-found--visible")}const p=12,m="cart-data",_="wishlist-key";export{m as C,p as P,_ as W,u as a,o as b,i as c,l as d,d as r};
-//# sourceMappingURL=constants-D-vNJdzF.js.map
+          </li>`).join(""))}function d(s){s?o.notFound.classList.add("not-found--visible"):o.notFound.classList.remove("not-found--visible")}const p=12,m="cart-data",_="wishlist-key";export{m as C,p as P,_ as W,d as a,u as b,i as c,l as d,o as r};
+//# sourceMappingURL=constants-BEQRqoCO.js.map
