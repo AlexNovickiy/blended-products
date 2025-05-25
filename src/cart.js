@@ -2,21 +2,26 @@
 import { fetchAllData, setTotalElements, setTotalPrice } from './js/helpers.js';
 import { refs } from './js/refs.js';
 import { renderNotFound, renderProducts } from './js/render-function.js';
+import { CART_KEY, WISHLIST_KEY } from './js/constants.js';
+import { useLocalStorage } from './js/storage.js';
 
 
 
-const data = await fetchAllData('cart-data');
 
-export function renderData(products) {
-  if (Array.isArray(products) && products.length) {
+export async function renderData() {
+  const cartData = await fetchAllData(CART_KEY);
+  const [wishlistData] = useLocalStorage(WISHLIST_KEY);
+
+  if (Array.isArray(cartData) && cartData.length) {
     renderNotFound(false)
-    renderProducts(products)
-    setTotalPrice(products);
-    setTotalElements(refs.cartSummary,products);
+    renderProducts(cartData)
+    setTotalPrice(cartData);
+    setTotalElements(refs.headerCartSummary,cartData)
+    setTotalElements(refs.wishlistHeaderSummary,wishlistData)
+    setTotalElements(refs.cartSummary,cartData);
   } else {
     renderNotFound(true)
   }
 }
 
-
-renderData(data)
+renderData()
