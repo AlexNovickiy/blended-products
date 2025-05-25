@@ -1,56 +1,49 @@
 //Логіка сторінки Cart
+import {
+  fetchAllData, filterProducts, renderFilteredData,
+  setTotalElements,
+  setTotalPrice,
+} from './js/helpers.js';
+import { refs } from './js/refs.js';
+import { renderNotFound, renderProducts } from './js/render-function.js';
+import { CART_KEY, WISHLIST_KEY } from './js/constants.js';
 import { useLocalStorage } from './js/storage.js';
 
-const menu = document.querySelector('.products');
+refs.searchForm.addEventListener('submit', handleSubmitSearchForm);
+refs.searchClearBtn.addEventListener('click', handleClearData);
 
-
-
-
-const [products,setProducts] = useLocalStorage();
-
-function cardMarkup({title,brand,category,price,images}) {
-  return `
-  <li class="products__item" data-id="">
-              <img class="products__image" src="${images[0]}" alt=""/>
-              <p class="products__title">${title}</p>
-              <p class="products__brand"><span class="products__brand--bold">Brand: ${brand}</span></p>
-              <p class="products__category">Category: ${category}</p>
-              <p class="products__price">Price: $${price}</p>
-            </li>`
+async function handleClearData() {
+  const cartData = await fetchAllData(CART_KEY);
+  refs.searchInput.value = '';
+  renderFilteredData(cartData);
 }
 
+async function renderData() {
+  const cartData = await fetchAllData(CART_KEY);
+  const [wishlistData] = useLocalStorage(WISHLIST_KEY);
 
-function createMarkup(items) {
-  menu.innerHTML = '';
-  let markup = '';
-  if (Array.isArray(items)) {
-    markup = items.map(product => cardMarkup(product)).join('');
+  if (Array.isArray(cartData) && cartData.length) {
+    renderNotFound(false);
+    renderProducts(cartData);
+    setTotalPrice(cartData);
+    setTotalElements(refs.headerCartSummary, cartData);
+    setTotalElements(refs.wishlistHeaderSummary, wishlistData);
+    setTotalElements(refs.cartSummary, cartData);
+  } else {
+    renderNotFound(true);
   }
-  menu.insertAdjacentHTML('afterbegin', markup);
 }
 
-function getTotalPrice(items) {
-  let total = 0;
-  if (Array.isArray(items)) {
-    items.forEach(product => {
-      total+= product.price;
-    })
+async function handleSubmitSearchForm(e) {
+  e.preventDefault();
+  const cartData = await fetchAllData(CART_KEY);
+  const searchValue = e.target.elements.searchValue.value;
+  if (searchValue.trim()) {
+    const filteredProducts = filterProducts(cartData, searchValue);
+    renderFilteredData(filteredProducts);
   }
-  return total;
 }
 
-function setTotalPrice() {
-  const priceEl = document.querySelector('.cart-summary__value[data-price]');
-  priceEl.textContent = getTotalPrice(products)
-}
-function setTotalElements() {
-  const totalEl = document.querySelector('.cart-summary__value[data-count]');
-  totalEl.textContent = products.length
-}
+renderData();
 
-
-
-createMarkup(products)
-setTotalPrice();
-setTotalElements()
 
