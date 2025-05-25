@@ -23,4 +23,6 @@ export function useLocalStorage(key, initialValue) {
       console.error('Error set data to localStorage:', error);
     }
   }
+
+  return [storedValue,setValue]
 }
