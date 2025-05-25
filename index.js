@@ -1,0 +1,16 @@
+import"./assets/styles-BK7AYJoX.js";import{i as _}from"./assets/vendor-iVKk4foX.js";const l="https://dummyjson.com";async function f(){const e=await fetch(`${l}/products/categories`);if(!e.ok)throw new Error("Failed to fetch categories");return e.json()}async function g({category:e="",page:t=1,limit:r=12}={}){let s;e&&e!=="All"?s=`${l}/products/category/${encodeURIComponent(e)}?limit=${r}&skip=${(t-1)*r}`:s=`${l}/products?limit=${r}&skip=${(t-1)*r}`;const d=await fetch(s);if(!d.ok)throw new Error("Failed to fetch products");return d.json()}const o={categoriesList:document.querySelector(".categories"),productsList:document.querySelector(".products"),notFound:document.querySelector(".not-found"),get loadMoreBtn(){return document.querySelector(".load-more-btn")},searchInput:document.querySelector(".search-form__input"),searchForm:document.querySelector(".search-form"),searchClearBtn:document.querySelector(".search-form__btn-clear")};function m(e,t){o.categoriesList.innerHTML=e.map(r=>`<li class="categories__item">
+          <button class="categories__btn${r===t?" categories__btn--active":""}" type="button">${r}</button>
+        </li>`).join("")}function y(e){o.productsList.innerHTML=e.map(t=>`<li class="products__item" data-id="${t.id}">
+          <img class="products__image" src="${t.thumbnail}" alt="${t.title}"/>
+          <p class="products__title">${t.title}</p>
+          <p class="products__brand"><span class="products__brand--bold">Brand:</span> ${t.brand}</p>
+          <p class="products__category">Category: ${t.category}</p>
+          <p class="products__price">Price: $${t.price}</p>
+        </li>`).join("")}function $(e){o.productsList.insertAdjacentHTML("beforeend",e.map(t=>`<li class="products__item" data-id="${t.id}">
+            <img class="products__image" src="${t.thumbnail}" alt="${t.title}"/>
+            <p class="products__title">${t.title}</p>
+            <p class="products__brand"><span class="products__brand--bold">Brand:</span> ${t.brand}</p>
+            <p class="products__category">Category: ${t.category}</p>
+            <p class="products__price">Price: $${t.price}</p>
+          </li>`).join(""))}function b(e){e?o.notFound.classList.add("not-found--visible"):o.notFound.classList.remove("not-found--visible")}const a=12;let n="All",c=1,i=0;async function L(){try{let e=await f();e=["All",...e],m(e,n),o.categoriesList.addEventListener("click",h),u()}catch{_.error({message:"Не вдалося завантажити категорії"})}}async function u(e=!0){try{e&&(c=1,o.productsList.innerHTML="");const{products:t,total:r}=await g({category:n,page:c,limit:a});if(i=r,e?y(t):$(t),b(!t.length),o.loadMoreBtn)o.loadMoreBtn.style.display=c*a<i?"":"none",o.loadMoreBtn.onclick=p;else if(c*a<i){const s=document.createElement("button");s.textContent="Load More",s.className="load-more-btn",o.productsList.after(s),s.onclick=p}}catch{_.error({message:"Не вдалося завантажити продукти"})}}function h(e){e.target.classList.contains("categories__btn")&&(n=e.target.textContent,m([...o.categoriesList.querySelectorAll(".categories__btn")].map(t=>t.textContent),n),u(!0))}function p(){c+=1,u(!1)}document.addEventListener("DOMContentLoaded",L);
+//# sourceMappingURL=index.js.map
