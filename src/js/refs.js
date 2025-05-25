@@ -20,6 +20,6 @@ export const refs = {
   closeModalBtn: document.querySelector('.modal__close-btn'),
   cartSummary: document.querySelector('.cart-summary__value[data-count]'),
   headerCartSummary: document.querySelector('.nav__count[data-cart-count]'),
-  wishlistHeaderSummary: document.querySelector('.nav__count[data-wishlist-count]')
+  wishlistHeaderSummary: document.querySelector('.nav__count[data-wishlist-count]'),
 };
 

@@ -1,4 +1,7 @@
 import { useLocalStorage } from './storage.js';
+import { renderNotFound, renderProducts } from './render-function.js';
+import { CART_KEY } from './constants.js';
+import { refs } from './refs.js';
 
 export async function fetchDataById(id) {
   const response = await fetch(`https://dummyjson.com/products/${id}`);
@@ -36,5 +39,19 @@ export function setTotalPrice(data) {
 
 export function setTotalElements(element,data) {
   element.textContent = data.length;
+}
+
+export function filterProducts(products,value) {
+  return products.filter(product => product.title.toLowerCase().includes(value.toLowerCase()))
+}
+
+export function renderFilteredData(products) {
+  if (products.length) {
+    renderProducts(products);
+    renderNotFound(false);
+  } else {
+    renderProducts(products)
+    renderNotFound(true)
+  }
 }
 
